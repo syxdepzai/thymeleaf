@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Category Management</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <header th:replace="fragments/header :: header"></header>
+    <div class="content" th:insert="~{::content}"></div>
+    <footer th:replace="fragments/footer :: footer"></footer>
+</body>
+</html>

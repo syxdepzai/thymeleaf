@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>List Categories</title>
+</head>
+<body>
+    <div th:fragment="content">
+        <form action="#" th:action="@{/categories}" method="get">
+            <input type="text" name="search" placeholder="Search categories..." th:value="${search}">
+            <button type="submit">Search</button>
+        </form>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+            <tr th:each="category : ${categories}">
+                <td th:text="${category.name}">Category Name</td>
+                <td th:text="${category.description}">Description</td>
+                <td>
+                    <a th:href="@{/categories/edit/{id}(id=${category.id})}">Edit</a> |
+                    <a th:href="@{/categories/delete/{id}(id=${category.id})}" onclick="return confirm('Are you sure?')">Delete</a>
+                </td>
+            </tr>
+        </table>
+        <!-- Pagination controls -->
+    </div>
+</body>
+</html>

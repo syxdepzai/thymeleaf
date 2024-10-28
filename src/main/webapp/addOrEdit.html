@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add/Edit Category</title>
+</head>
+<body>
+    <div th:fragment="content">
+        <form th:action="@{/categories/save}" th:object="${category}" method="post">
+            <input type="hidden" th:field="*{id}"/>
+            <div>
+                <label>Name:</label>
+                <input type="text" th:field="*{name}" required/>
+            </div>
+            <div>
+                <label>Description:</label>
+                <textarea th:field="*{description}"></textarea>
+            </div>
+            <button type="submit">Save</button>
+        </form>
+    </div>
+    <!-- List of categories -->
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Actions</th>
+    </tr>
+    <tr th:each="category : ${categories.content}">
+        <td th:text="${category.name}">Category Name</td>
+        <td th:text="${category.description}">Description</td>
+        <td>
+            <a th:href="@{/categories/edit/{id}(id=${category.id})}">Edit</a> |
+            <a th:href="@{/categories/delete/{id}(id=${category.id})}" onclick="return confirm('Are you sure?')">Delete</a>
+        </td>
+    </tr>
+</table>
+
+<!-- Pagination controls -->
+<div>
+    <ul>
+        <li th:if="${categories.hasPrevious()}">
+            <a th:href="@{/categories(page=${categories.number - 1}, search=${search})}">Previous</a>
+        </li>
+        <li th:each="i : ${#numbers.sequence(0, categories.totalPages - 1)}">
+            <a th:href="@{/categories(page=${i}, search=${search})}"
+               th:text="${i + 1}"
+               th:classappend="${i == categories.number} ? 'active' : ''">1</a>
+        </li>
+        <li th:if="${categories.hasNext()}">
+            <a th:href="@{/categories(page=${categories.number + 1}, search=${search})}">Next</a>
+        </li>
+    </ul>
+</div>
+    <form action="#" th:action="@{/categories}" method="get">
+    <input type="text" name="search" placeholder="Search categories..." th:value="${search}">
+    <button type="submit">Search</button>
+</form>
+    
+</body>
+</html>
